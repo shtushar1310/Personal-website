@@ -9,6 +9,10 @@
   background: #f1f5f9;
 }
 
+.dark ::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+
 ::-webkit-scrollbar-thumb {
   background: #3b82f6;
   border-radius: 4px;
@@ -42,6 +46,17 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* Hide default cursor when custom cursor is active (desktop only) */
+@media (min-width: 768px) {
+  body {
+    cursor: none;
+  }
+  
+  a, button, input, textarea, select, [role="button"] {
+    cursor: none;
+  }
+}
+
 /* Custom utility classes */
 @layer utilities {
   .text-gradient {
@@ -53,5 +68,68 @@ body {
   
   .bg-gradient {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+
+  .glassmorphism {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .glassmorphism-dark {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+}
+
+/* Keyframe animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+  }
+  to {
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.8);
+  }
+}
+
+/* Three.js canvas styles */
+canvas {
+  touch-action: none;
+}
+
+/* Custom cursor styles */
+.custom-cursor {
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Responsive design improvements */
+@media (max-width: 768px) {
+  body {
+    cursor: auto;
+  }
+  
+  .custom-cursor {
+    display: none;
   }
 }

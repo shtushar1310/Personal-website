@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Download, Loader2 } from 'lucide-react';
+import { Download, Loader2, Sparkles, Briefcase, GraduationCap, Code } from 'lucide-react';
 import { useSkills, useExperience, useEducation } from '../utils/useSupabase';
 
 const Resume = () => {
@@ -83,11 +83,11 @@ const Resume = () => {
 
   if (loading) {
     return (
-      <section id="resume" className="py-20 bg-white">
+      <section id="resume" className="py-20 bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <Loader2 className="w-8 h-8 animate-spin mx-auto text-blue-600" />
-            <p className="mt-4 text-gray-600">Loading resume data...</p>
+            <p className="mt-4 text-gray-600 dark:text-gray-300">Loading resume data...</p>
           </div>
         </div>
       </section>
@@ -96,11 +96,11 @@ const Resume = () => {
 
   if (error) {
     return (
-      <section id="resume" className="py-20 bg-white">
+      <section id="resume" className="py-20 bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <p className="text-red-600">Error loading resume data: {error}</p>
-            <p className="mt-2 text-gray-600">Please try again later.</p>
+            <p className="mt-2 text-gray-600 dark:text-gray-300">Please try again later.</p>
           </div>
         </div>
       </section>
@@ -108,7 +108,7 @@ const Resume = () => {
   }
 
   return (
-    <section id="resume" className="py-20 bg-white">
+    <section id="resume" className="py-20 bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -117,10 +117,13 @@ const Resume = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-            Resume
-          </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <Sparkles className="w-8 h-8 text-blue-600" />
+            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white">
+              Resume
+            </h2>
+          </div>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             My professional journey, skills, and experience in web development.
           </p>
         </motion.div>
@@ -133,25 +136,41 @@ const Resume = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-2xl font-bold text-gray-900 mb-8">Skills</h3>
-            <div className="space-y-8">
-              {Object.entries(groupedSkills).map(([category, skillList], index) => (
-                <div key={index}>
-                  <h4 className="text-lg font-semibold text-gray-800 mb-4">
-                    {category}
-                  </h4>
-                  <div className="flex flex-wrap gap-3">
-                    {skillList.map((skill, skillIndex) => (
-                      <span
-                        key={skillIndex}
-                        className="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
+            <div className="backdrop-blur-md bg-white/80 dark:bg-gray-800/80 rounded-2xl p-8 border border-white/20 dark:border-gray-700/20 shadow-xl">
+              <div className="flex items-center gap-2 mb-8">
+                <Code className="w-6 h-6 text-blue-600" />
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Skills</h3>
+              </div>
+              <div className="space-y-8">
+                {Object.entries(groupedSkills).map(([category, skillList], index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                  >
+                    <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">
+                      {category}
+                    </h4>
+                    <div className="flex flex-wrap gap-3">
+                      {skillList.map((skill, skillIndex) => (
+                        <motion.span
+                          key={skillIndex}
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.3, delay: skillIndex * 0.05 }}
+                          viewport={{ once: true }}
+                          whileHover={{ scale: 1.05, y: -2 }}
+                          className="px-4 py-2 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 text-blue-800 dark:text-blue-300 rounded-full text-sm font-medium border border-blue-200 dark:border-blue-700/30 shadow-sm hover:shadow-md transition-all duration-200"
+                        >
+                          {skill}
+                        </motion.span>
+                      ))}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </motion.div>
 
@@ -162,29 +181,35 @@ const Resume = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-2xl font-bold text-gray-900 mb-8">Experience</h3>
-            <div className="space-y-8">
-              {displayExperience.map((job, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="border-l-4 border-blue-500 pl-6"
-                >
-                  <h4 className="text-lg font-semibold text-gray-900">
-                    {job.title}
-                  </h4>
-                  <p className="text-blue-600 font-medium">{job.company}</p>
-                  <p className="text-gray-500 text-sm mb-2">
-                    {job.period}
-                  </p>
-                  <p className="text-gray-600 leading-relaxed">
-                    {job.description}
-                  </p>
-                </motion.div>
-              ))}
+            <div className="backdrop-blur-md bg-white/80 dark:bg-gray-800/80 rounded-2xl p-8 border border-white/20 dark:border-gray-700/20 shadow-xl">
+              <div className="flex items-center gap-2 mb-8">
+                <Briefcase className="w-6 h-6 text-green-600" />
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Experience</h3>
+              </div>
+              <div className="space-y-8">
+                {displayExperience.map((job, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    className="relative border-l-4 border-blue-500 pl-6"
+                  >
+                    <div className="absolute -left-2 top-0 w-4 h-4 bg-blue-500 rounded-full"></div>
+                    <h4 className="text-lg font-semibold text-gray-900 dark:text-white">
+                      {job.title}
+                    </h4>
+                    <p className="text-blue-600 dark:text-blue-400 font-medium">{job.company}</p>
+                    <p className="text-gray-500 dark:text-gray-400 text-sm mb-2">
+                      {job.period}
+                    </p>
+                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                      {job.description}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </motion.div>
         </div>
@@ -197,31 +222,37 @@ const Resume = () => {
           viewport={{ once: true }}
           className="mt-16"
         >
-          <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">
-            Education
-          </h3>
-          <div className="max-w-2xl mx-auto">
-            {displayEducation.map((edu, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="text-center border-l-4 border-green-500 pl-6"
-              >
-                <h4 className="text-lg font-semibold text-gray-900">
-                  {edu.degree}
-                </h4>
-                <p className="text-green-600 font-medium">{edu.school}</p>
-                <p className="text-gray-500 text-sm mb-2">
-                  {edu.period}
-                </p>
-                <p className="text-gray-600 leading-relaxed">
-                  {edu.description}
-                </p>
-              </motion.div>
-            ))}
+          <div className="backdrop-blur-md bg-white/80 dark:bg-gray-800/80 rounded-2xl p-8 border border-white/20 dark:border-gray-700/20 shadow-xl max-w-4xl mx-auto">
+            <div className="flex items-center justify-center gap-2 mb-8">
+              <GraduationCap className="w-6 h-6 text-green-600" />
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                Education
+              </h3>
+            </div>
+            <div className="max-w-2xl mx-auto">
+              {displayEducation.map((edu, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="text-center relative border-l-4 border-green-500 pl-6"
+                >
+                  <div className="absolute -left-2 top-0 w-4 h-4 bg-green-500 rounded-full"></div>
+                  <h4 className="text-lg font-semibold text-gray-900 dark:text-white">
+                    {edu.degree}
+                  </h4>
+                  <p className="text-green-600 dark:text-green-400 font-medium">{edu.school}</p>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm mb-2">
+                    {edu.period}
+                  </p>
+                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                    {edu.description}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </motion.div>
 
@@ -235,9 +266,9 @@ const Resume = () => {
         >
           <motion.a
             href="https://docs.google.com/document/d/1EBKLfikqOaqBWjIFP-6CbEKLE-Bin4GKyTpdDWoRiU4/edit?usp=sharing"
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-4 px-8 rounded-full transition-all duration-200 shadow-lg hover:shadow-xl"
           >
             <Download size={20} />
             Download Resume

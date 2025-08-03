@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Linkedin, Github, Twitter, Loader2, CheckCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin, Github, Twitter, Loader2, CheckCircle, MessageCircle, Send } from 'lucide-react';
 import { useContactForm } from '../utils/useSupabase';
 
 const Contact = () => {
@@ -65,7 +65,7 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="py-20 bg-gray-900 text-white">
+    <section id="contact" className="py-20 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -74,9 +74,12 @@ const Contact = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4">
-            Get In Touch
-          </h2>
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <MessageCircle className="w-8 h-8 text-blue-400" />
+            <h2 className="text-4xl sm:text-5xl font-bold">
+              Get In Touch
+            </h2>
+          </div>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
             I'm always interested in new opportunities and exciting projects. 
             Let's work together to bring your ideas to life!
@@ -91,42 +94,46 @@ const Contact = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-2xl font-bold mb-8">Contact Information</h3>
-            
-            <div className="space-y-6">
-              {contactInfo.map((info, index) => (
-                <motion.a
-                  key={index}
-                  href={info.href}
-                  whileHover={{ x: 10 }}
-                  className="flex items-center space-x-4 p-4 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors duration-200"
-                >
-                  <info.icon className="w-6 h-6 text-blue-400" />
-                  <div>
-                    <p className="font-semibold">{info.title}</p>
-                    <p className="text-gray-300">{info.value}</p>
-                  </div>
-                </motion.a>
-              ))}
-            </div>
-
-            <div className="mt-12">
-              <h4 className="text-xl font-semibold mb-6">Follow Me</h4>
-              <div className="flex space-x-4">
-                {socialLinks.map((social, index) => (
+            <div className="backdrop-blur-md bg-white/10 rounded-2xl p-8 border border-white/20 shadow-xl">
+              <h3 className="text-2xl font-bold mb-8">Contact Information</h3>
+              
+              <div className="space-y-6">
+                {contactInfo.map((info, index) => (
                   <motion.a
                     key={index}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.1, y: -5 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="p-3 bg-gray-800 rounded-lg hover:bg-blue-600 transition-colors duration-200"
-                    aria-label={social.label}
+                    href={info.href}
+                    whileHover={{ x: 10, scale: 1.02 }}
+                    className="flex items-center space-x-4 p-4 bg-white/10 rounded-xl hover:bg-white/20 transition-all duration-200 border border-white/10 hover:border-white/20"
                   >
-                    <social.icon className="w-6 h-6" />
+                    <div className="p-3 bg-blue-500/20 rounded-lg">
+                      <info.icon className="w-6 h-6 text-blue-400" />
+                    </div>
+                    <div>
+                      <p className="font-semibold">{info.title}</p>
+                      <p className="text-gray-300">{info.value}</p>
+                    </div>
                   </motion.a>
                 ))}
+              </div>
+
+              <div className="mt-12">
+                <h4 className="text-xl font-semibold mb-6">Follow Me</h4>
+                <div className="flex space-x-4">
+                  {socialLinks.map((social, index) => (
+                    <motion.a
+                      key={index}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.1, y: -5, rotate: 360 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="p-4 bg-white/10 rounded-xl hover:bg-blue-600/30 transition-all duration-200 border border-white/10 hover:border-blue-500/30 shadow-lg hover:shadow-xl"
+                      aria-label={social.label}
+                    >
+                      <social.icon className="w-6 h-6" />
+                    </motion.a>
+                  ))}
+                </div>
               </div>
             </div>
           </motion.div>
@@ -138,108 +145,113 @@ const Contact = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-2xl font-bold mb-8">Send a Message</h3>
-            
-            {success && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mb-6 p-4 bg-green-600 rounded-lg flex items-center gap-2"
-              >
-                <CheckCircle className="w-5 h-5" />
-                <span>Message sent successfully!</span>
-              </motion.div>
-            )}
+            <div className="backdrop-blur-md bg-white/10 rounded-2xl p-8 border border-white/20 shadow-xl">
+              <h3 className="text-2xl font-bold mb-8">Send a Message</h3>
+              
+              {success && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mb-6 p-4 bg-green-600/20 border border-green-500/30 rounded-lg flex items-center gap-2"
+                >
+                  <CheckCircle className="w-5 h-5 text-green-400" />
+                  <span>Message sent successfully!</span>
+                </motion.div>
+              )}
 
-            {error && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mb-6 p-4 bg-red-600 rounded-lg"
-              >
-                <p>Error: {error}</p>
-              </motion.div>
-            )}
-            
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {error && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mb-6 p-4 bg-red-600/20 border border-red-500/30 rounded-lg"
+                >
+                  <p>Error: {error}</p>
+                </motion.div>
+              )}
+              
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium mb-2">
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      required
+                      disabled={loading}
+                      className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 text-white placeholder-gray-400 backdrop-blur-sm"
+                      placeholder="Your name"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium mb-2">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      disabled={loading}
+                      className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 text-white placeholder-gray-400 backdrop-blur-sm"
+                      placeholder="your.email@example.com"
+                    />
+                  </div>
+                </div>
+                
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium mb-2">
-                    Name
+                  <label htmlFor="subject" className="block text-sm font-medium mb-2">
+                    Subject
                   </label>
                   <input
                     type="text"
-                    id="name"
-                    name="name"
+                    id="subject"
+                    name="subject"
                     required
                     disabled={loading}
-                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50"
-                    placeholder="Your name"
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 text-white placeholder-gray-400 backdrop-blur-sm"
+                    placeholder="What's this about?"
                   />
                 </div>
+                
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium mb-2">
-                    Email
+                  <label htmlFor="message" className="block text-sm font-medium mb-2">
+                    Message
                   </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="6"
                     required
                     disabled={loading}
-                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50"
-                    placeholder="your.email@example.com"
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none disabled:opacity-50 text-white placeholder-gray-400 backdrop-blur-sm"
+                    placeholder="Tell me about your project..."
                   />
                 </div>
-              </div>
-              
-              <div>
-                <label htmlFor="subject" className="block text-sm font-medium mb-2">
-                  Subject
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  required
+                
+                <motion.button
+                  type="submit"
                   disabled={loading}
-                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50"
-                  placeholder="What's this about?"
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows="6"
-                  required
-                  disabled={loading}
-                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none disabled:opacity-50"
-                  placeholder="Tell me about your project..."
-                />
-              </div>
-              
-              <motion.button
-                type="submit"
-                disabled={loading}
-                whileHover={{ scale: loading ? 1 : 1.05 }}
-                whileTap={{ scale: loading ? 1 : 0.95 }}
-                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
-              >
-                {loading ? (
-                  <>
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                    Sending...
-                  </>
-                ) : (
-                  'Send Message'
-                )}
-              </motion.button>
-            </form>
+                  whileHover={{ scale: loading ? 1 : 1.05, y: loading ? 0 : -2 }}
+                  whileTap={{ scale: loading ? 1 : 0.95 }}
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:bg-gray-600 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-5 h-5" />
+                      Send Message
+                    </>
+                  )}
+                </motion.button>
+              </form>
+            </div>
           </motion.div>
         </div>
       </div>

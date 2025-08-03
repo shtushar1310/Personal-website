@@ -24,3 +24,5 @@ dist-ssr
 *.sln
 *.sw?
 SUPABASE_SETUP.md
+package-lock.json
+package.json

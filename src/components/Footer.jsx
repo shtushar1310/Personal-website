@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Linkedin, Github, Twitter } from 'lucide-react';
+import { Linkedin, Github, Twitter, Heart, Sparkles } from 'lucide-react';
 
 const Footer = () => {
   const socialLinks = [
@@ -21,7 +21,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-gray-900 text-white py-8">
+    <footer className="bg-gradient-to-r from-gray-900 via-blue-900 to-purple-900 text-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row justify-between items-center">
           {/* Copyright */}
@@ -30,10 +30,18 @@ const Footer = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="mb-4 md:mb-0"
+            className="mb-6 md:mb-0 text-center md:text-left"
           >
-            <p className="text-gray-400">
-              © 2025 Tushar Sharma. All rights reserved.
+            <div className="flex items-center gap-2 mb-2">
+              <Sparkles className="w-5 h-5 text-blue-400" />
+              <span className="text-lg font-semibold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                Tushar Sharma
+              </span>
+            </div>
+            <p className="text-gray-400 text-sm">
+              © 2025 All rights reserved. Made with{' '}
+              <Heart className="inline w-4 h-4 text-red-500 animate-pulse" />
+              {' '}and modern web technologies.
             </p>
           </motion.div>
 
@@ -51,9 +59,9 @@ const Footer = () => {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{ scale: 1.1, y: -3 }}
+                whileHover={{ scale: 1.1, y: -3, rotate: 360 }}
                 whileTap={{ scale: 0.95 }}
-                className="p-2 bg-gray-800 rounded-lg hover:bg-blue-600 transition-colors duration-200"
+                className="p-3 bg-white/10 backdrop-blur-sm rounded-xl hover:bg-blue-600/30 transition-all duration-200 border border-white/10 hover:border-blue-500/30 shadow-lg hover:shadow-xl"
                 aria-label={social.label}
               >
                 <social.icon className="w-5 h-5" />
@@ -61,6 +69,19 @@ const Footer = () => {
             ))}
           </motion.div>
         </div>
+        
+        {/* Additional Info */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          viewport={{ once: true }}
+          className="mt-8 pt-8 border-t border-white/10 text-center"
+        >
+          <p className="text-gray-400 text-sm">
+            Built with React, Three.js, Tailwind CSS, and Framer Motion
+          </p>
+        </motion.div>
       </div>
     </footer>
   );
