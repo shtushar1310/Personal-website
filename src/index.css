@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden; /* 🚫 Prevent horizontal scroll */
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -52,8 +59,13 @@ body {
     cursor: none;
   }
   
-  a, button, input, textarea, select, [role="button"] {
+  a, input, textarea, select, [role="button"] {
     cursor: none;
+  }
+  
+  /* Keep normal pointer for buttons */
+  button {
+    cursor: pointer !important;
   }
 }
 
@@ -131,5 +143,21 @@ canvas {
   
   .custom-cursor {
     display: none;
+  }
+  
+  /* Improve touch handling on mobile */
+  button, a {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer !important;
+  }
+  
+  /* Ensure proper z-index stacking on mobile */
+  .relative.z-20 {
+    z-index: 20;
+  }
+  
+  .relative.z-30 {
+    z-index: 30;
   }
 }

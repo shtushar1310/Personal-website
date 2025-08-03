@@ -152,10 +152,16 @@ const Hero = () => {
     }
   };
 
+  const handleButtonClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    scrollToProjects();
+  };
+
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
       {/* 3D Background */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 pointer-events-none">
         <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
           <ambientLight intensity={0.5} />
           <pointLight position={[10, 10, 10]} intensity={1} />
@@ -212,13 +218,14 @@ const Hero = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1.0 }}
-              className="flex justify-center items-center"
+              className="flex justify-center items-center relative z-20"
             >
               <motion.button
                 whileHover={{ scale: 1.05, boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1)" }}
                 whileTap={{ scale: 0.95 }}
-                onClick={scrollToProjects}
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-4 px-8 rounded-full text-lg transition-all duration-300 shadow-lg hover:shadow-xl backdrop-blur-sm"
+                onClick={handleButtonClick}
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-4 px-8 rounded-full text-lg transition-all duration-300 shadow-lg hover:shadow-xl backdrop-blur-sm relative z-30 cursor-pointer"
+                style={{ touchAction: 'manipulation' }}
               >
                 View My Work
               </motion.button>
@@ -238,7 +245,7 @@ const Hero = () => {
             className="flex flex-col items-center gap-2"
           >
             <MousePointer className="w-6 h-6" />
-            <span className="text-sm">Move mouse to interact</span>
+            {/* <span className="text-sm">Move mouse to interact</span> */}
           </motion.div>
         </motion.div>
       </div>
