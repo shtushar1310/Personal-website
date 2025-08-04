@@ -160,4 +160,45 @@ canvas {
   .relative.z-30 {
     z-index: 30;
   }
+  
+  /* Specific fixes for mobile navigation */
+  nav button {
+    cursor: pointer !important;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(59, 130, 246, 0.2);
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  
+  /* Ensure mobile menu is above other elements */
+  nav {
+    z-index: 9999 !important;
+  }
+  
+  /* Make sure mobile menu buttons are clickable */
+  nav .md\\:hidden button {
+    position: relative;
+    z-index: 10000;
+    pointer-events: auto;
+  }
+  
+  /* Additional mobile navigation fixes */
+  nav .md\\:hidden {
+    pointer-events: auto;
+  }
+  
+  nav .md\\:hidden > div {
+    pointer-events: auto;
+  }
+  
+  /* Ensure mobile menu overlay doesn't block clicks */
+  nav .md\\:hidden .backdrop-blur-md {
+    pointer-events: auto;
+  }
+  
+  /* Force pointer events on mobile menu items */
+  nav .md\\:hidden button[onClick] {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
 }

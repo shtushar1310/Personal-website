@@ -15,6 +15,22 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isOpen && !event.target.closest('nav')) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+    
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [isOpen]);
+
   const navItems = [
     { name: 'Home', href: '#home' },
     { name: 'Projects', href: '#projects' },
@@ -23,9 +39,14 @@ const Navbar = () => {
   ];
 
   const scrollToSection = (href) => {
-    const element = document.querySelector(href);
+    console.log('scrollToSection called with:', href);
+    const element = document.querySelector( href);
+    console.log('Found element:', element);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
+      console.log("clicked")
+    } else {
+      console.log('Element not found for selector:', href);
     }
     setIsOpen(false);
   };
@@ -76,40 +97,44 @@ const Navbar = () => {
 
           {/* Mobile menu button */}
           <div className="md:hidden">
-            <motion.button
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-white dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2"
+            <button
+              onClick={() => {
+                console.log('Mobile menu button clicked');
+                setIsOpen(!isOpen);
+              }}
+              className="text-white dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 p-2 rounded-md hover:bg-white/10 transition-colors duration-200"
+              aria-label="Toggle mobile menu"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </motion.button>
+            </button>
           </div>
         </div>
 
         {/* Mobile Navigation */}
-        <motion.div
-          initial={false}
-          animate={isOpen ? 'open' : 'closed'}
-          variants={{
-            open: { opacity: 1, height: 'auto', scale: 1 },
-            closed: { opacity: 0, height: 0, scale: 0.95 }
-          }}
-          transition={{ duration: 0.3 }}
-          className="md:hidden overflow-hidden"
-        >
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 backdrop-blur-md bg-white/90 dark:bg-gray-900/90 rounded-lg mt-2 border border-white/20 dark:border-gray-700/20">
-            {navItems.map((item) => (
-              <motion.button
-                key={item.name}
-                whileHover={{ x: 5, backgroundColor: 'rgba(59, 130, 246, 0.1)' }}
-                onClick={() => scrollToSection(item.href)}
-                className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 block px-3 py-2 rounded-md text-base font-medium transition-all duration-200 w-full text-left"
-              >
-                {item.name}
-              </motion.button>
-            ))}
-          </div>
-        </motion.div>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden absolute top-full left-0 right-0 z-50"
+          >
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 backdrop-blur-md bg-white/90 dark:bg-gray-900/90 rounded-lg mt-2 border border-white/20 dark:border-gray-700/20 shadow-lg">
+              {navItems.map((item) => (
+                <button
+                  key={item.name}
+                  onClick={() => {
+                    console.log('Mobile menu item clicked:', item.name);
+                    scrollToSection(item.href);
+                  }}
+                  className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 block px-3 py-2 rounded-md text-base font-medium transition-all duration-200 w-full text-left hover:bg-blue-50 dark:hover:bg-blue-900/20"
+                >
+                  {item.name}
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        )}
       </div>
     </motion.nav>
   );
